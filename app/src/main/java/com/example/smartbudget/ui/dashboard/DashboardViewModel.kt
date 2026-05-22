@@ -9,6 +9,7 @@ import com.example.smartbudget.data.ExpenseRepository
 import com.example.smartbudget.notification.BudgetAlertService
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -24,12 +25,8 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val monthTotal: StateFlow<Long> = repo.getMonthTotal(year, month)
+        .map { it ?: 0L }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0L)
-        .let { flow ->
-            kotlinx.coroutines.flow.flow {
-                flow.collect { emit(it ?: 0L) }
-            }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0L)
-        }
 
     fun getBudget(): Long = BudgetAlertService.getBudget(getApplication())
 
