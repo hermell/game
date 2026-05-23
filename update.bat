@@ -14,7 +14,8 @@ if not exist app-debug.apk (
 echo Download complete!
 echo.
 echo Installing to phone... (make sure phone is connected via USB)
-adb install -r app-debug.apk
+adb uninstall com.example.smartbudget 2>nul
+adb install app-debug.apk
 if %errorlevel% neq 0 (
     echo Install failed. Check USB connection.
 ) else (
