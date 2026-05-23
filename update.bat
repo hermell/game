@@ -5,7 +5,7 @@ echo   SmartBudget Update
 echo ====================================
 echo.
 echo Downloading latest APK...
-powershell -Command "Invoke-WebRequest -Uri 'https://github.com/hermell/game/releases/download/latest/app-debug.apk' -OutFile 'app-debug.apk'"
+powershell -Command "Invoke-WebRequest -Uri 'https://github.com/hermell/game/releases/latest/download/app-debug.apk' -OutFile 'app-debug.apk'"
 if not exist app-debug.apk (
     echo Download failed. Check your internet connection.
     pause
