@@ -5,7 +5,7 @@ echo   SmartBudget Update
 echo ====================================
 echo.
 echo Downloading latest APK...
-powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri 'https://github.com/hermell/game/releases/latest/download/app-debug.apk' -OutFile 'app-debug.apk'"
+curl.exe -L -o app-debug.apk "https://github.com/hermell/game/releases/latest/download/app-debug.apk"
 if not exist app-debug.apk (
     echo Download failed. Check your internet connection.
     pause
