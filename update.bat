@@ -1,26 +1,25 @@
 @echo off
-chcp 65001 > nul
+chcp 437 > nul
 echo ====================================
-echo   SmartBudget 자동 업데이트
+echo   SmartBudget Update
 echo ====================================
 echo.
-echo 최신 APK 다운로드 중...
-curl -L -o app-debug.apk "https://github.com/hermell/game/releases/download/latest/app-debug.apk"
-if %errorlevel% neq 0 (
-    echo 다운로드 실패. 인터넷 연결을 확인하세요.
+echo Downloading latest APK...
+powershell -Command "Invoke-WebRequest -Uri 'https://github.com/hermell/game/releases/download/latest/app-debug.apk' -OutFile 'app-debug.apk'"
+if not exist app-debug.apk (
+    echo Download failed. Check your internet connection.
     pause
     exit /b 1
 )
-echo 다운로드 완료!
+echo Download complete!
 echo.
-echo 폰에 설치 중... (폰이 USB로 연결되어 있는지 확인하세요)
+echo Installing to phone... (make sure phone is connected via USB)
 adb install -r app-debug.apk
 if %errorlevel% neq 0 (
-    echo 설치 실패. 폰 연결 상태를 확인하세요.
+    echo Install failed. Check USB connection.
 ) else (
-    echo.
-    echo 설치 완료! SmartBudget이 최신 버전으로 업데이트됐습니다.
+    echo Install complete!
 )
-del app-debug.apk
+del app-debug.apk 2>nul
 echo.
 pause
